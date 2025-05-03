@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>B'dayyyy</title>
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-  <link href="output.css" rel="stylesheet">
+  <link href="src/output.css" rel="stylesheet">
 </head>
 <body class="bg-white">
 
@@ -27,15 +27,15 @@
           class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
         >
           <span class="sr-only">Open main menu</span>
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor ">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                   d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
         </button>
       </div>
 
-      <!-- Links (always visible) -->
-      <div class="flex space-x-12">
+      <!-- Desktop links -->
+      <div class="hidden lg:flex lg:gap-x-12">
         <a href="timeline.html" class="text-sm font-semibold text-gray-900 hover:text-cyan-400">Her story</a>
         <a href="gallery.html"  class="text-sm font-semibold text-gray-900 hover:text-cyan-400">Gallery</a>
         <a href="letter.html"   class="text-sm font-semibold text-gray-900 hover:text-cyan-400">Open Letter</a>
