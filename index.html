@@ -1,83 +1,151 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en" x-data="{ open: false }">
 <head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>B'dayyyy</title>
-  <!-- Tailwind CSS CDN -->
-  <link href='https://cdn.jsdelivr.net/npm/tailwindcss@3.4.2/dist/tailwind.min.css' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link href="output.css" rel="stylesheet">
 </head>
-<body class='bg-white'>
+<body class="bg-white">
 
-  <!-- Header with logo, desktop nav and mobile toggle -->
-  <header class='fixed w-full top-0 bg-white shadow z-50'>
-    <div class='max-w-7xl mx-auto flex items-center justify-between p-4'>
-      <!-- Logo -->
-      <a href='index.html'>
-        <img src='logo.png' alt='Logo' class='h-8 w-auto'>
-      </a>
-
-      <!-- Desktop navigation -->
-      <nav class='hidden lg:flex space-x-6'>
-        <a href='timeline.html' class='text-sm font-semibold text-gray-900 hover:text-pink-500'>Her story</a>
-        <a href='gallery.html' class='text-sm font-semibold text-gray-900 hover:text-pink-500'>Gallery</a>
-        <a href='letter.html' class='text-sm font-semibold text-gray-900 hover:text-pink-500'>Open Letter</a>
-        <a href='why.html' class='text-sm font-semibold text-gray-900 hover:text-pink-500'>Why?</a>
-      </nav>
+  <!-- NAVIGATION -->
+  <header class="absolute inset-x-0 top-0 z-50">
+    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <div class="flex lg:flex-1">
+        <a href="index.html" class="-m-1.5 p-1.5">
+          <span class="sr-only">Your Company</span>
+          <img class="h-8 w-auto" src="logo.png" alt="">
+        </a>
+      </div>
 
       <!-- Mobile menu button -->
-      <button id='menu-btn' class='lg:hidden p-2 text-gray-700 focus:outline-none'>
-        <svg class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
-          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 6h16M4 12h16M4 18h16'></path>
-        </svg>
-      </button>
-    </div>
+      <div class="flex lg:hidden">
+        <button
+          @click="open = true"
+          type="button"
+          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
 
-    <!-- Mobile menu panel (hidden by default) -->
-    <div id='mobile-menu' class='hidden lg:hidden bg-white border-t border-gray-200'>
-      <div class='px-2 pt-2 pb-3 space-y-1'>
-        <a href='timeline.html' class='block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50'>Her story</a>
-        <a href='gallery.html' class='block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50'>Gallery</a>
-        <a href='letter.html' class='block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50'>Open Letter</a>
-        <a href='why.html' class='block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50'>Why?</a>
+      <!-- Desktop links -->
+      <div class="hidden lg:flex lg:gap-x-12">
+        <a href="timeline.html" class="text-sm font-semibold text-gray-900 hover:text-cyan-400">Her story</a>
+        <a href="gallery.html"  class="text-sm font-semibold text-gray-900 hover:text-cyan-400">Gallery</a>
+        <a href="letter.html"   class="text-sm font-semibold text-gray-900 hover:text-cyan-400">Open Letter</a>
+        <a href="why.html"      class="text-sm font-semibold text-gray-900 hover:text-cyan-400">Why?</a>
       </div>
-      <div class='px-2 pb-3'>
-        <button id='menu-close' class='w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900'>Close Menu</button>
+    </nav>
+
+    <!-- Mobile slide‐over -->
+    <div
+      x-show="open"
+      x-cloak
+      x-transition.opacity
+      class="fixed inset-0 z-50 flex"
+    >
+      <!-- backdrop -->
+      <div
+        class="fixed inset-0 bg-black bg-opacity-25"
+        @click="open = false"
+      ></div>
+      <!-- panel -->
+      <div
+        class="relative ml-auto w-full max-w-sm bg-white px-6 py-6 overflow-y-auto sm:ring-1 sm:ring-gray-900/10"
+        @click.away="open = false"
+      >
+        <div class="flex items-center justify-between">
+          <a href="index.html" class="-m-1.5 p-1.5">
+            <span class="sr-only">Your Company</span>
+            <img class="h-8 w-auto" src="logo.png" alt="">
+          </a>
+          <button
+            @click="open = false"
+            type="button"
+            class="-m-2.5 rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Close menu</span>
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                    d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-6 flow-root">
+          <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="space-y-2 py-6">
+              <a href="timeline.html"
+                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Her story</a>
+              <a href="gallery.html"
+                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Gallery</a>
+              <a href="letter.html"
+                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Open Letter</a>
+              <a href="why.html"
+                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">Why?</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- end mobile slide‐over -->
   </header>
 
-  <!-- Main hero section with gradient backgrounds -->
-  <main class='pt-20 relative isolate overflow-hidden'>
-    <!-- Top gradient blur -->
-    <div class='absolute inset-x-0 top-0 transform-gpu blur-3xl -z-10'>
-      <div class='bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30' style='clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)'></div>
-    </div>
-    
-    <!-- Hero content -->
-    <section class='max-w-2xl mx-auto text-center py-32 px-4'>
-      <h1 class='text-5xl sm:text-6xl font-semibold text-gray-900'>Happiest Birthday Diiii</h1>
-      <p class='mt-6 text-lg text-gray-500'>Forget the past; look forward to the future, for the best things are yet to come.</p>
-      <div class='mt-10 flex justify-center space-x-6'>
-        <a href='timeline.html' class='px-4 py-2 bg-pink-600 text-white rounded-md font-semibold hover:bg-pink-500'>Her story</a>
-        <a href='letter.html' class='px-4 py-2 text-gray-900 font-semibold hover:text-pink-500'>Open letter →</a>
+  <!-- HERO SECTION -->
+  <div class="relative isolate px-6 pt-14 lg:px-8">
+    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+      <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg]
+                  bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30
+                  sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+           style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%,
+                    72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%,
+                    27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
       </div>
-    </section>
-
-    <!-- Bottom gradient blur -->
-    <div class='absolute inset-x-0 bottom-0 transform-gpu blur-3xl -z-10'>
-      <div class='bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30' style='clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)'></div>
     </div>
-  </main>
 
-  <!-- Mobile menu toggle script -->
-  <script>
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuClose = document.getElementById('menu-close');
-    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-    menuClose.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-  </script>
+    <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56 text-center">
+      <div class="hidden sm:flex sm:justify-center sm:mb-8">
+        <div class="relative rounded-full px-3 py-1 text-sm text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
+          What's special than having you?
+          <a href="letter.html" class="font-semibold text-pink-400 ml-2">
+            Let me see it <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <h1 class="text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
+        Happiest Birthday Diiii
+      </h1>
+      <p class="mt-8 text-lg font-medium text-gray-500 sm:text-xl">
+        Forget the past; look forward to the future, for the best things are yet to come.
+      </p>
+      <div class="mt-10 flex items-center justify-center gap-x-6">
+        <a href="timeline.html"
+           class="rounded-md bg-pink-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-pink-500">
+          Her story
+        </a>
+        <a href="letter.html" class="text-sm font-semibold text-gray-900">
+          Open letter <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl
+                sm:top-[calc(100%-30rem)]" aria-hidden="true">
+      <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2
+                  bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30
+                  sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+           style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%,
+                    72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%,
+                    27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
