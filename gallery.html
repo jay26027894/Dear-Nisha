@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" x-data="gallery()" x-init="init()">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="src/output.css">
+</head>
+<body class="bg-pink-100 text-pink-400">
+  <section class="max-w-6xl px-5 py-16 mx-auto">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-pink-400 mb-4">Photo Gallery</h1>
+      <p class="text-lg leading-relaxed">Canvas that speaks!!</p>
+    </div>
+
+    <!-- Masonry Grid -->
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4" >
+      <template x-for="(img, i) in images" :key="i">
+        <div class="break-inside-avoid relative group cursor-pointer" @click="open(i)">
+          <img :src="img.thumb" alt="Gallery Image" class="rounded-lg shadow-lg w-full mb-4 transform group-hover:scale-105 transition"/>
+          <div class="absolute inset-0 bg-black bg-opacity-25 opacity-0 group-hover:opacity-100 transition"></div>
+        </div>
+      </template>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div x-show="show" x-cloak class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4">
+      <button @click="close()" class="absolute top-4 right-4 text-white text-3xl">&times;</button>
+      <button @click="prev()" class="absolute left-4 text-white text-3xl">&#10094;</button>
+      <img :src="images[current].full" alt="Expanded image" class="max-h-full max-w-full rounded-lg"/>
+      <button @click="next()" class="absolute right-4 text-white text-3xl">&#10095;</button>
+    </div>
+  </section>
+
+  <script>
+    function gallery() {
+      return {
+        images: [
+  { thumb: 'image 1.jpg', full: 'image 1.jpg' },
+  { thumb: 'image 6.jpg', full: 'image 6.jpg' },
+  { thumb: 'image 7.jpg', full: 'image 7.jpg' },
+  { thumb: 'image 11.jpg', full: 'image 11.jpg' },
+  { thumb: 'image 9.jpg', full: 'image 9.jpg' },
+  { thumb: 'image 8.jpg', full: 'image 8.jpg' }
+],
+        show: false,
+        current: 0,
+        init() {
+          window.addEventListener('keydown', e => {
+            if (!this.show) return;
+            if (e.key === 'ArrowLeft') this.prev();
+            if (e.key === 'ArrowRight') this.next();
+            if (e.key === 'Escape') this.close();
+          });
+        },
+        open(i) { this.current = i; this.show = true; },
+        close() { this.show = false; },
+        prev() { this.current = (this.current - 1 + this.images.length) % this.images.length; },
+        next() { this.current = (this.current + 1) % this.images.length; }
+      }
+    }
+  </script>
+</body>
+</html>

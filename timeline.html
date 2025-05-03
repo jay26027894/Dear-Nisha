@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kid'sTimeline</title>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 p-6">
+  <main x-data="timeline()" x-init="init()" class="max-w-4xl mx-auto">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-pink-700">Kid's Fun Timeline</h1>
+      <p class="text-gray-600 mt-2">A playful journey through childhood moments.</p>
+    </header>
+
+    <ol class="relative border-l-4 border-pink-500">
+      <template x-for="(event, index) in events" :key="index">
+        <li class="mb-12 ml-6">
+          <span class="absolute -left-3.5 w-7 h-7 rounded-full bg-pink-500 border-2 border-white"></span>
+          <article @click="show(index)"
+            class="cursor-pointer bg-white rounded-lg shadow p-6 hover:bg-pink-50 transition max-w-md mx-auto">
+            <figure>
+              <img :src="event.img" :alt="event.title + ' photo'"
+                class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-auto object-cover rounded-lg mb-4 mx-auto" />
+              <figcaption>
+                <h2 class="text-2xl font-semibold text-purple-700 text-center" x-text="event.title"></h2>
+                <p class="text-gray-700 mt-2 text-center" x-text="event.desc"></p>
+              </figcaption>
+            </figure>
+          </article>
+        </li>
+      </template>
+    </ol>
+
+    <!-- Detail Modal -->
+    <div x-show="detail.show" x-cloak
+      class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+      <div class="relative bg-white rounded-lg overflow-hidden shadow-xl w-full max-w-lg" @click.outside="close()">
+        <button @click="close()"
+          class="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl">&times;</button>
+        <img :src="events[detail.index].img" :alt="events[detail.index].title + ' enlarged'"
+          class="w-full max-h-[80vh] object-contain" />
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-blue-700" x-text="events[detail.index].title"></h3>
+          <p class="mt-2 text-gray-700" x-text="events[detail.index].desc"></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function timeline() {
+      return {
+        events: [
+          { title: 'Born to Rule (The Crib)', desc: 'Started life screaming orders and stealing hearts.', img: 'image 3.jpg' },
+          { title: 'Peekaboo Pro', desc: 'Mastered the art of disappearing behind hands.', img: 'image 2.jpg' },
+          { title: 'Cereal Spiller', desc: 'Breakfast was a battlefield... and the floor lost.', img: 'image 4.jpg' },
+          { title: 'Superhero in Pajamas', desc: 'Saved the world before nap time. Cape optional.', img: 'image 5.jpg' },
+          { title: 'Bubble Blower Extraordinaire', desc: 'Soap bubbles: 100. Face splashes: 1000.', img: 'image 1.jpg' },
+          { title: 'Slide Conqueror', desc: 'Climbed slides the wrong way... because why not?', img: 'image 6.jpg' }
+        ],
+        detail: { show: false, index: 0 },
+        init() {
+          window.addEventListener('keydown', e => {
+            if (!this.detail.show) return;
+            if (e.key === 'Escape') this.close();
+          });
+        },
+        show(i) {
+          this.detail.index = i;
+          this.detail.show = true;
+        },
+        close() {
+          this.detail.show = false;
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
