@@ -1,0 +1,1 @@
+An interactive web application created using HTML, CSS, JavaScript, and Tailwind CSS designed to express heartfelt appreciation. The project showcases frontend development skills, animation techniques, and responsive design principles. Hosted on Vercel for seamless deployment.
